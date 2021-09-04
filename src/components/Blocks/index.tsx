@@ -1,7 +1,7 @@
 //https://www.redblobgames.com/grids/hexagons/
 
 import { useStyles, innerRadius, outerRadius } from './styles'
-const r = 5
+const r = 1
 const w = r
 const h = r
 const mode = 'mode1'
@@ -68,12 +68,10 @@ class Block {
 function generateBlocks(num: number): Block[] {
   const blocks: Block[] = []
 
-  for (let i = -w; i <= w; i++) {
-    for (let j = -h; j <= h; j++) {
-      for (let k = -h; k <= h; k++) {
-        if (k === -i - j) {
-          blocks.push(new Block(i, j, k))
-        }
+  for (let x = -w; x <= w; x++) {
+    for (let y = -w; y <= w; y++) {
+      if (y <= Math.min(w, -x + w) && y >= Math.max(-w, -x - w)) {
+        blocks.push(new Block(x, y, -x - y))
       }
     }
   }
