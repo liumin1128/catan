@@ -4,6 +4,8 @@ import { useStyles, innerRadius, outerRadius } from './styles'
 const r = 5
 const w = r
 const h = r
+const mode = 'mode1'
+const width = 100
 
 class Block {
   id: string
@@ -22,15 +24,24 @@ class Block {
     // this.left = x * innerRadius * 2 + (y % 2) * 0.5 * innerRadius * 2 + 500
     // this.top = y * 1.5 * outerRadius + 500
 
+    // let left = 0
+    // left += x * innerRadius * 2
+    // left += y * innerRadius
+
+    // let top = 0
+    // top += y * (outerRadius + innerRadius * 0.5)
+
+    // this.left = left
+    // this.top = top
     let left = 0
-    left += x * innerRadius * 2
-    left += y * innerRadius
-
     let top = 0
-    top += y * (outerRadius + innerRadius * 0.5)
 
-    this.left = left + 500
-    this.top = top + 500
+    left += x * (outerRadius * 1.5)
+    top += y * innerRadius * 2
+    top += x * innerRadius
+
+    this.left = left
+    this.top = top
 
     this.type = 'aaaa'
     this.color =
@@ -69,15 +80,69 @@ function generateBlocks(num: number): Block[] {
   return blocks
 }
 
+const l = 2 * (r + 1) * width
+
 export default function Home() {
   const blocks: Block[] = generateBlocks(10)
-  console.log('blocks')
-  console.log(blocks)
-  const classes = useStyles()
+  // console.log('blocks')
+  // console.log(blocks)
+  // const classes = useStyles()
 
   return (
     <>
-      <div className={classes.root}>
+      <figure>
+        <svg viewBox={`-${l} -${l} ${2 * l} ${2 * l}`}>
+          <g
+            // transform='rotate(-30)'
+            transform={mode === 'mode2' ? 'rotate(-30)' : undefined}
+            fill='#ffffff'
+            stroke='#333333'
+            // style={{
+            //   transformOrigin: '0px 0px',
+            // }}
+          >
+            <g
+              className='grid'
+              style={{
+                transformOrigin: '0px 0px',
+              }}
+            >
+              {blocks.map(i => {
+                return (
+                  <g
+                    key={i.id}
+                    transform={`translate(${i.left}, ${i.top}) `}
+                    // style={{
+                    //   transformOrigin: '0px 0px',
+                    // }}
+                  >
+                    <g>
+                      <polygon
+                        // style={{
+                        //   transformOrigin: '0px 0px',
+                        // }}
+                        points='100,0 50,-87 -50,-87 -100,-0 -50,87 50,87'
+                        // points='100,0 50,-87 -50,-87 -100,-0 -50,87 50,87'
+                        // pointerEvents={'visiblePainted'}
+                        // fill='hsl(60, 10%, 95%)'
+                        // stroke='hsl(0, 0%, 70%)'
+                        // stroke-width='2px'
+                        // style={{
+                        //   transformOrigin: '0px 0px',
+                        // }}
+                      />
+                      {/* <g>
+                        <text>{i.x + ':' + i.y}</text>
+                      </g> */}
+                    </g>
+                  </g>
+                )
+              })}
+            </g>
+          </g>
+        </svg>
+      </figure>
+      {/* <div className={classes.root}>
         {blocks.map(i => {
           const z = -(i.x + i.y)
           const d = (Math.abs(i.x) + Math.abs(i.y) + Math.abs(z)) / 2
@@ -91,12 +156,11 @@ export default function Home() {
                 backgroundColor: i.color,
               }}
             >
-              {/* {i.x + ':' + i.y + ':' + z + ':' + d} */}
               {d}
             </div>
           )
         })}
-      </div>
+      </div> */}
     </>
   )
 }

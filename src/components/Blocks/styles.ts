@@ -1,6 +1,6 @@
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-export const outerRadius = 50
+export const outerRadius = 100
 export const innerRadius = Math.cos((30 * Math.PI) / 180) * outerRadius
 
 const width = innerRadius * 2
@@ -8,13 +8,13 @@ const height = (width * 280) / 255
 
 export const useStyles = makeStyles(() =>
   createStyles({
-    root: {
+    grid: {
       position: 'relative',
     },
 
     block: {
-      width: width + 1,
-      height: height + 1,
+      // width: width + 1,
+      // height: height + 1,
       position: 'absolute',
       textAlign: 'center',
       lineHeight: height + 'px',
