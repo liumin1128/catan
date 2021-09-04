@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <>
-      1111
-    </>
-  );
+import Blocks from '@/components/Blocks'
+
+export default () => {
+  return <Blocks />
 }
