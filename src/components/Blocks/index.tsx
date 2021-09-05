@@ -1,59 +1,15 @@
 //https://www.redblobgames.com/grids/hexagons/
 
 import { useStyles } from './styles'
-const r = 1
+const r = 4
 const scale = 6
 const w = r
 const mode = 'mode1'
 const width = 100
+import { cube2position, position2cube, getJiaoList, getBianList } from './utils'
+
 export const outerRadius = width
 export const innerRadius = Math.cos((30 * Math.PI) / 180) * outerRadius
-
-function cube2position(x: number, y: number): [left: number, top: number] {
-  let left = 0
-  let top = 0
-  left += x * (outerRadius * 1.5) + innerRadius
-  top += (y * 2 + x) * innerRadius
-  return [left, top]
-}
-
-function position2cube(left: number, top: number): [x: number, y: number] {
-  let x = 0
-  let y = 0
-  x = (left - innerRadius) / (1.5 * outerRadius)
-  y = (top / innerRadius - x) / 2
-  return [x, y]
-}
-
-function getJiaoList(x: number, y: number): { x: number; y: number }[] {
-  const list = [
-    [+2, +2],
-    [+2, -4],
-    [-4, +2],
-    [-2, -2],
-    [-2, +4],
-    [+4, -2],
-  ]
-
-  return list.map(i => {
-    return { x: x + i[0], y: y + i[1] }
-  })
-}
-
-function getBianList(x: number, y: number): { x: number; y: number }[] {
-  const list = [
-    [0, -3],
-    [-3, 0],
-    [-3, 3],
-    [0, 3],
-    [3, 0],
-    [3, -3],
-  ]
-
-  return list.map(i => {
-    return { x: x + i[0], y: y + i[1] }
-  })
-}
 
 class Point {
   id: string
@@ -140,20 +96,21 @@ export default function Home() {
                       <g transform={mode === 'mode2' ? 'rotate(30)' : undefined}>
                         <text>
                           {/* {i.x + '/' + i.y + ':' + i.left.toFixed(0) + ',' + i.top.toFixed(0)} */}
-                          {i.x + ',' + i.y}
+                          {i.x + ',' + i.y + ',' + i.dis}
                         </text>
                       </g>
                     </g>
                   </g>
                 )
               })}
+
               {houses.map(i => {
                 return (
                   <g key={i.id} transform={`translate(${i.left}, ${i.top}) `}>
                     <g>
-                      {/* <circle cx='100' cy='50' r='40' stroke='black' stroke-width='2' fill='red' /> */}
+                      <circle cx='0' cy='0' r='20' stroke='black' fill='red' />
                       <g transform={mode === 'mode2' ? 'rotate(30)' : undefined}>
-                        <text>{i.x + ',' + i.y}</text>
+                        <text>{i.x + ',' + i.y + ',' + i.dis}</text>
                       </g>
                     </g>
                   </g>
@@ -166,7 +123,7 @@ export default function Home() {
                     <g>
                       {/* <circle cx='100' cy='50' r='40' stroke='black' stroke-width='2' fill='red' /> */}
                       <g transform={mode === 'mode2' ? 'rotate(30)' : undefined}>
-                        <text>{i.x + ',' + i.y}</text>
+                        <text>{i.x + ',' + i.y + ',' + i.dis}</text>
                       </g>
                     </g>
                   </g>
