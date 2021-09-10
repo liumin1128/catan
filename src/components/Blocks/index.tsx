@@ -1,19 +1,10 @@
 //https://www.redblobgames.com/grids/hexagons/
 
 import { useStyles } from './styles'
-const r = 4
-const scale = 6
-const w = r
-const mode = 'mode1'
-const width = 100
-import { cube2position, position2cube, getJiaoList, getBianList } from './utils'
 
-export const outerRadius = width
-export const innerRadius = Math.cos((30 * Math.PI) / 180) * outerRadius
 import { Game } from './game'
 import { useEffect, useState } from 'react'
 
-const l = 2 * (r + 1) * width
 
 export default function Home() {
   const [game, setGame] = useState<Game>()
