@@ -1,8 +1,24 @@
 import { getJiaoList, getBianList } from './utils'
+import { Map, List, Record } from 'immutable'
+
+type Direction = '0' | '1' | '2' | '3' | '4' | '5'
+
+class Position extends Record({ x: 0, y: 0 }) {
+  // Position.distance(p1, p2) 计算两个位置之间的距离
+  static distance(p1: Position, p2: Position) {
+    return (Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y) + Math.abs( (-p1.x -p1.y) - (-p2.x -p2.y))) / 2
+  }
+
+  // Position.originDistance(p) 计算该位置距离原点的距离
+  static originDistance(p: Position) {
+    return (Math.abs(p.x) + Math.abs(p.y) + Math.abs( -p.x -p.y)) / 2
+  }
+}
 
 class Point {
   scale: number
   id: string
+  pos: Position
   x: number
   y: number
   z: number
@@ -51,14 +67,14 @@ export class Route extends Point {}
 export class Game {
   rotate: number = 30
   scale: number = 6
-  r: number = 3
+  r: number = 1
   sideLength: number = 100
   width: number = 2 * (this.r + 1) * this.sideLength
   height: number = 2 * (this.r + 1) * this.sideLength
   outerRadius = this.sideLength
   innerRadius = Math.cos((30 * Math.PI) / 180) * this.outerRadius
 
-  blocks: Block[] = []
+  blocks: List<Map> = []
   houses: House[] = []
   routes: Route[] = []
 
